@@ -8,14 +8,13 @@ storiesOf('Button', module)
   .add('Primary', () => {
     const label = 'Colors';
     const options = {
-      Yellow: 'hsl(49, 100%, 58%)',
-      Blue: 'hsl(196, 83%, 75%)',
-      Green: 'hsl(106, 47%, 64%)',
+      Primary: 'hsl(49, 100%, 58%)',
+      Secondary: 'hsl(196, 83%, 75%)',
+      Tertiary: 'hsl(106, 47%, 64%)',
     };
     const defaultValue = 'hsl(49, 100%, 58%)';
     const groupId = 'GROUP-ID1';
-
     const value = select(label, options, defaultValue, groupId);
-    return <Button color={value}>Hello</Button>;
+    return <Button color={value}>Hello Roman</Button>;
   })
-  .add('Secondary', () => <Button secondary>Hello</Button>);
+  .add('Secondary', () => <Button secondary>Hello Roman</Button>);
