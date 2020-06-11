@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import LinkIcon from 'assets/icons/link.svg';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
@@ -47,7 +48,7 @@ const StyledHeading = styled(Heading)`
 const StyledAvatar = styled.img`
   width: 86px;
   height: 86px;
-  border: 5px solid ${({ theme }) => theme.twitter};
+  border: 5px solid ${({ theme }) => theme.twitters};
   position: absolute;
   right: 20px;
   top: 20px;
@@ -68,33 +69,57 @@ const StyledLinkButton = styled.a`
   transform: translateY(-50%);
 `;
 
-const Card = ({ cardType }) => (
-  <StyledWrapper>
-    <InnerWrapper activeColor={cardType}>
-      <StyledHeading>Hello</StyledHeading>
-      <DateInfo>5 days</DateInfo>
-      {cardType === 'twitter' && (
-        <StyledAvatar src="https://pbs.twimg.com/profile_images/1259789458473472000/i8jKo_Mq_400x400.jpg" />
-      )}
-      {cardType === 'article' && (
-        <StyledLinkButton href="https://www.youtube.com/watch?v=xm1apVEMPcU&list=RDxm1apVEMPcU&start_radio=1" />
-      )}
-    </InnerWrapper>
-    <InnerWrapper flex>
-      <Paragraph>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, nisi!
-      </Paragraph>
-      <Button secondary>Click Me</Button>
-    </InnerWrapper>
-  </StyledWrapper>
-);
+class Card extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: false,
+    };
+  }
+
+  handleCardClick = () => this.setState({ redirect: true });
+
+  render() {
+    const { cardType, title, created, twitterName, articleUrl, content, id } = this.props;
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to={`${cardType}/${id}`} />;
+    }
+    return (
+      <StyledWrapper onClick={this.handleCardClick}>
+        <InnerWrapper activeColor={cardType}>
+          <StyledHeading>{title}</StyledHeading>
+          <DateInfo>{created}</DateInfo>
+          {cardType === 'twitters' && (
+            <StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />
+          )}
+          {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+        </InnerWrapper>
+        <InnerWrapper flex>
+          <Paragraph>{content}</Paragraph>
+          <Button secondary>REMOVE</Button>
+        </InnerWrapper>
+      </StyledWrapper>
+    );
+  }
+}
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['note', 'article', 'twitter']),
+  cardType: PropTypes.oneOf(['notes', 'articles', 'twitters']),
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  twitterName: PropTypes.string,
+  articleUrl: PropTypes.string,
+  content: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 Card.defaultProps = {
-  cardType: 'note',
+  cardType: 'notes',
+  twitterName: null,
+  articleUrl: null,
 };
 
 export default Card;

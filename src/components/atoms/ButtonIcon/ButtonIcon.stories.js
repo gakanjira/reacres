@@ -22,7 +22,7 @@ const YellowBg = styled.div`
 storiesOf('ButtonIcon', module)
   .addDecorator((story) => <YellowBg>{story()}</YellowBg>)
   .add('BulbIcon', () => <ButtonIcon icon={bulbIcon} />)
-  .add('BulbIcon', () => <ButtonIcon active icon={bulbIcon} />)
+  .add('BulbIcon', () => <ButtonIcon icon={bulbIcon} />)
   .add('LogoutIcon', () => <ButtonIcon icon={logoutIcon} />)
   .add('PenIcon', () => <ButtonIcon icon={penIcon} />)
   .add('PlusIcon', () => <ButtonIcon icon={plusIcon} />)
