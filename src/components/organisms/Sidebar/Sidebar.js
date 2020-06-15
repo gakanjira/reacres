@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import withContext from 'hoc/withContext';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import bulbIcon from 'assets/icons/bulb.svg';
 import logoutIcon from 'assets/icons/logout.svg';
@@ -37,8 +38,8 @@ const NavIcon = styled(ButtonIcon)`
   margin: 25px 0;
 `;
 
-const Sidebar = ({ cardType }) => (
-  <SidebarWrapper activeColor={cardType}>
+const Sidebar = ({ pageContext }) => (
+  <SidebarWrapper activeColor={pageContext}>
     <LogoWrapper>
       <h1>logo</h1>
     </LogoWrapper>
@@ -54,11 +55,11 @@ const Sidebar = ({ cardType }) => (
 );
 
 Sidebar.propTypes = {
-  cardType: PropTypes.oneOf(['note', 'article', 'twitter']),
+  pageContext: PropTypes.oneOf(['notes', 'articles', 'twitters']),
 };
 
 Sidebar.defaultProps = {
-  cardType: 'note',
+  pageContext: 'notes',
 };
 
-export default Sidebar;
+export default withContext(Sidebar);

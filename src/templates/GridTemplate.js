@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withContext from 'hoc/withContext';
 import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import Heading from 'components/atoms/Heading/Heading';
@@ -28,13 +29,13 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-const GridTemplate = ({ cardType, children }) => (
-  <UserPageTemplate cardType={cardType}>
+const GridTemplate = ({ children, pageType }) => (
+  <UserPageTemplate pageType={pageType}>
     <StyledWrapper>
       <StyledPageHeader>
         <Input search placeholder="search" />
-        <StyledHeading big>{cardType}s</StyledHeading>
-        <Paragraph># {cardType}s</Paragraph>
+        <StyledHeading big>{pageType}s</StyledHeading>
+        <Paragraph># {pageType}s</Paragraph>
       </StyledPageHeader>
       <GridWrapper>{children}</GridWrapper>
     </StyledWrapper>
@@ -42,12 +43,12 @@ const GridTemplate = ({ cardType, children }) => (
 );
 
 GridTemplate.propTypes = {
-  cardType: PropTypes.oneOf(['notes', 'articles', 'twitters']),
   children: PropTypes.arrayOf(PropTypes.Object).isRequired,
+  pageType: PropTypes.oneOf(['notes', 'articles', 'twitters']),
 };
 
 GridTemplate.defaultProps = {
-  cardType: 'notes',
+  pageType: 'notes',
 };
 
-export default GridTemplate;
+export default withContext(GridTemplate);

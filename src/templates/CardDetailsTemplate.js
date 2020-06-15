@@ -4,6 +4,7 @@ import UserPageTemplate from 'templates/UserPageTemplate';
 import PropTypes from 'prop-types';
 import Button from 'components/atoms/Button/Button';
 import styled from 'styled-components';
+import withContext from 'hoc/withContext';
 
 const LinkButton = styled(Button)`
   margin: 50px 20px;
@@ -11,10 +12,10 @@ const LinkButton = styled(Button)`
   text-decoration: none;
 `;
 
-const CardDetailsTemplate = ({ children, cardType }) => (
-  <UserPageTemplate cardType={cardType}>
+const CardDetailsTemplate = ({ children, pageType }) => (
+  <UserPageTemplate pageType={pageType}>
     {children}
-    <LinkButton secondary as={Link} to={`/${cardType}`}>
+    <LinkButton secondary as={Link} to={`/${pageType}`}>
       go back
     </LinkButton>
   </UserPageTemplate>
@@ -22,7 +23,7 @@ const CardDetailsTemplate = ({ children, cardType }) => (
 
 CardDetailsTemplate.propTypes = {
   children: PropTypes.element.isRequired,
-  cardType: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
-export default CardDetailsTemplate;
+export default withContext(CardDetailsTemplate);
